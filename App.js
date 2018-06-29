@@ -1,9 +1,16 @@
 import React from "react";
-import { StyleSheet, View, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  StatusBar,
+  TouchableOpacity
+} from "react-native";
 
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import reducer from "./reducers";
+import thunk from "redux-thunk";
 
 import { white, red } from "./utils/colors";
 
@@ -16,6 +23,8 @@ import Quiz from "./components/Quiz";
 import NewDeck from "./components/NewDeck";
 import NewCard from "./components/NewCard";
 
+const store = createStore(reducer, applyMiddleware(thunk));
+
 function CustomStatusBar({ backgroundColor, ...props }) {
   return (
     <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
@@ -26,7 +35,16 @@ function CustomStatusBar({ backgroundColor, ...props }) {
 
 const MainNavigator = createStackNavigator(
   {
-    Home: { screen: DeckList },
+    Home: {
+      screen: DeckList,
+      navigationOptions: ({ navigation }) => ({
+        headerRight: (
+          <TouchableOpacity onPress={() => navigation.navigate("NewDeck")}>
+            <Text>Add</Text>
+          </TouchableOpacity>
+        )
+      })
+    },
     DeckDetail: {
       screen: DeckDetail,
       navigationOptions: {
@@ -34,7 +52,12 @@ const MainNavigator = createStackNavigator(
       }
     },
     Quiz: { screen: Quiz },
-    NewDeck: { screen: NewDeck },
+    NewDeck: {
+      screen: NewDeck,
+      navigationOptions: {
+        title: "New Deck"
+      }
+    },
     NewCard: { screen: NewCard }
   },
   {
@@ -51,7 +74,7 @@ const MainNavigator = createStackNavigator(
 export default class App extends React.Component {
   render() {
     return (
-      <Provider store={createStore(reducer)}>
+      <Provider store={store}>
         <View style={styles.container}>
           <CustomStatusBar backgroundColor="black" barStyle="light-content" />
           <MainNavigator />
