@@ -15,11 +15,17 @@ import { getDecks } from "../actions";
 import DeckItem from "./DeckItem";
 
 class DeckList extends Component {
-  renderDeckItem = ({ item }) => <DeckItem key={item.title} {...item} />;
-
   componentDidMount = () => {
     this.props.getDecks();
   };
+
+  renderDeckItem = ({ item }) => (
+    <DeckItem
+      key={item.title}
+      {...item}
+      onPress={() => this.props.navigation.navigate("DeckDetail", item.title)}
+    />
+  );
 
   render() {
     const { deckList } = this.props;

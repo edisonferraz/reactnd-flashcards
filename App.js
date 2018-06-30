@@ -13,6 +13,7 @@ import reducer from "./reducers";
 import thunk from "redux-thunk";
 
 import { white, red } from "./utils/colors";
+import { FontAwesome } from "@expo/vector-icons";
 
 import { createStackNavigator } from "react-navigation";
 import { Constants } from "expo";
@@ -39,8 +40,15 @@ const MainNavigator = createStackNavigator(
       screen: DeckList,
       navigationOptions: ({ navigation }) => ({
         headerRight: (
-          <TouchableOpacity onPress={() => navigation.navigate("NewDeck")}>
-            <Text>Add</Text>
+          <TouchableOpacity
+            style={styles.newDeckButton}
+            onPress={() => navigation.navigate("NewDeck")}
+          >
+            <FontAwesome
+              name="plus-square"
+              size={26}
+              style={styles.buttonNewDeck}
+            />
           </TouchableOpacity>
         )
       })
@@ -58,7 +66,12 @@ const MainNavigator = createStackNavigator(
         title: "New Deck"
       }
     },
-    NewCard: { screen: NewCard }
+    NewCard: {
+      screen: NewCard,
+      navigationOptions: {
+        title: "Add Card"
+      }
+    }
   },
   {
     navigationOptions: {
@@ -87,5 +100,9 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  buttonNewDeck: {
+    color: "#fff",
+    marginRight: 10
   }
 });

@@ -1,4 +1,9 @@
-import { FETCH_DECKS_SUCCESS, CREATE_DECK_SUCCESS } from "../actions";
+import {
+  FETCH_DECKS_SUCCESS,
+  CREATE_DECK_SUCCESS,
+  ADD_CARD_TO_DECK_SUCCESS
+} from "../actions";
+import { formatDeckWithCards } from "../utils/helpers";
 
 const initialState = {
   React: {
@@ -34,6 +39,11 @@ export default function(state = {}, action) {
 
     case CREATE_DECK_SUCCESS: {
       return { ...state, ...action.deck };
+    }
+
+    case ADD_CARD_TO_DECK_SUCCESS: {
+      const { title, card } = action;
+      return formatDeckWithCards({ ...state }, title, card);
     }
 
     default:
