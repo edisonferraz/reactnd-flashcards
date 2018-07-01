@@ -10,6 +10,8 @@ import {
 } from "react-native";
 
 import { addCardToDeck } from "../actions";
+import * as colors from "../utils/colors";
+import Button from "./Button";
 
 class NewCard extends Component {
   state = {
@@ -39,24 +41,22 @@ class NewCard extends Component {
       <View>
         <View>
           <TextInput
-            style={styles.textInput}
+            style={[styles.textInput, { marginTop: 50 }]}
             value={this.state.question}
             onChangeText={text => this.onChangeText("question", text)}
             placeholder="Question"
+            underlineColorAndroid="transparent"
           />
 
           <TextInput
-            style={styles.textInput}
+            style={[styles.textInput, { marginBottom: 10 }]}
             value={this.state.answer}
             onChangeText={text => this.onChangeText("answer", text)}
             placeholder="Answer"
+            underlineColorAndroid="transparent"
           />
         </View>
-        <View>
-          <TouchableOpacity style={styles.button} onPress={this.submitDeck}>
-            <Text style={styles.buttonText}>Add Card</Text>
-          </TouchableOpacity>
-        </View>
+        <Button onPress={this.submitDeck}>Add Card</Button>
       </View>
     );
   }
@@ -73,15 +73,15 @@ export default connect(
 
 const styles = StyleSheet.create({
   textInput: {
-    margin: 16
-  },
-  button: {
-    backgroundColor: "#000",
-    padding: 10,
-    marginTop: 10
-  },
-  buttonText: {
-    color: "#fff",
-    textAlign: "center"
+    backgroundColor: "#fff",
+    borderColor: "#999",
+    borderWidth: 1,
+    borderRadius: 4,
+    color: colors.gray,
+    height: 40,
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    padding: 10
   }
 });

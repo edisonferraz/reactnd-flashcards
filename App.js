@@ -59,7 +59,12 @@ const MainNavigator = createStackNavigator(
         title: "Details"
       }
     },
-    Quiz: { screen: Quiz },
+    Quiz: {
+      screen: Quiz,
+      navigationOptions: {
+        title: "Quiz"
+      }
+    },
     NewDeck: {
       screen: NewDeck,
       navigationOptions: {

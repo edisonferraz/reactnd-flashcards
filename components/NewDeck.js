@@ -1,14 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Keyboard
-} from "react-native";
 
+import { View, StyleSheet, TextInput, Keyboard } from "react-native";
+import * as colors from "../utils/colors";
+import Button from "./Button";
 import { createDeck } from "../actions";
 
 class NewDeck extends Component {
@@ -38,19 +33,13 @@ class NewDeck extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
-          <Text style={styles.text}>What is the title of your new deck?</Text>
-          <TextInput
-            style={styles.textInput}
-            value={this.state.title}
-            onChangeText={this.onChangeText}
-          />
-        </View>
-        <View>
-          <TouchableOpacity style={styles.button} onPress={this.submitDeck}>
-            <Text style={styles.buttonText}>Create Deck</Text>
-          </TouchableOpacity>
-        </View>
+        <TextInput
+          style={styles.textInput}
+          value={this.state.title}
+          onChangeText={this.onChangeText}
+          placeholder="What is the title of your new deck?"
+        />
+        <Button onPress={this.submitDeck}>Create Deck</Button>
       </View>
     );
   }
@@ -66,19 +55,16 @@ export default connect(
 )(NewDeck);
 
 const styles = StyleSheet.create({
-  container: {},
-  text: {
-    margin: 20
-  },
   textInput: {
-    margin: 20
-  },
-  button: {
-    backgroundColor: "#000",
+    backgroundColor: "#fff",
+    borderColor: "#999",
+    borderWidth: 1,
+    borderRadius: 4,
+    color: colors.gray,
+    height: 40,
+    marginTop: 40,
+    marginLeft: 10,
+    marginRight: 10,
     padding: 10
-  },
-  buttonText: {
-    color: "#fff",
-    textAlign: "center"
   }
 });

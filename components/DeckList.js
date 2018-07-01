@@ -9,10 +9,11 @@ import {
   TouchableOpacity
 } from "react-native";
 
-import { white, orange } from "../utils/colors";
+import * as colors from "../utils/colors";
 import { getDecks } from "../actions";
 
 import DeckItem from "./DeckItem";
+import Button from "./Button";
 
 class DeckList extends Component {
   componentDidMount = () => {
@@ -33,18 +34,10 @@ class DeckList extends Component {
     if (deckList.length === 0) {
       return (
         <View>
-          <Text>You do not have any decks!</Text>
-
-          <TouchableOpacity
-            style={{
-              backgroundColor: "#666",
-              marginTop: 20,
-              padding: 10
-            }}
-            onPress={() => this.props.navigation.navigate("NewDeck")}
-          >
-            <Text>Add New Deck</Text>
-          </TouchableOpacity>
+          <Text style={styles.titleNoDecks}>You do not have any decks!</Text>
+          <Button onPress={() => this.props.navigation.navigate("NewDeck")}>
+            Add New Deck
+          </Button>
         </View>
       );
     }
@@ -76,12 +69,19 @@ export default connect(
 )(DeckList);
 
 const styles = StyleSheet.create({
+  titleNoDecks: {
+    color: colors.red,
+    textAlign: "center",
+    marginTop: 40,
+    marginBottom: 20,
+    fontSize: 24
+  },
   listTitle: {
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-    color: orange,
-    backgroundColor: white,
+    color: colors.orange,
+    backgroundColor: colors.white,
     borderBottomColor: "#eee",
     borderBottomWidth: 1,
     paddingTop: 12,

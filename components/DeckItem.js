@@ -1,15 +1,19 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { white, gray } from "../utils/colors";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import * as colors from "../utils/colors";
 
-export class DeckDetail extends Component {
+export default class DeckDetail extends Component {
   render() {
     const { title, questions, onPress } = this.props;
 
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.button} onPress={onPress}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title}>
+            <MaterialCommunityIcons name="cards-playing-outline" size={20} />{" "}
+            {title}
+          </Text>
           <Text style={styles.amount}>{questions.length} Cards</Text>
         </TouchableOpacity>
       </View>
@@ -17,21 +21,24 @@ export class DeckDetail extends Component {
   }
 }
 
-export default DeckDetail;
-
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: white,
-    padding: 5,
-    height: 60
+    backgroundColor: colors.white,
+    padding: 10,
+    paddingTop: 20,
+    paddingBottom: 20,
+    marginTop: 10
   },
   button: {
     flex: 1
   },
   title: {
-    fontSize: 20
+    fontSize: 22,
+    color: colors.red
   },
   amount: {
-    color: gray
+    color: colors.gray,
+    fontSize: 14,
+    paddingLeft: 24
   }
 });

@@ -6,3 +6,6 @@ export const formatDeckWithCards = (data, title, card) => {
 
   return data;
 };
+
+export const calculatePercentage = (total, totalCorrect) =>
+  ((totalCorrect / total) * 100).toFixed(0);
