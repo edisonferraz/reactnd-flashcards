@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  StatusBar,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, View, StatusBar, TouchableOpacity } from "react-native";
 
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
@@ -17,6 +11,7 @@ import { FontAwesome } from "@expo/vector-icons";
 
 import { createStackNavigator } from "react-navigation";
 import { Constants } from "expo";
+import { clearLocalNotification, setLocalNotification } from "./utils/helpers";
 
 import DeckList from "./components/DeckList";
 import DeckDetail from "./components/DeckDetail";
@@ -90,6 +85,10 @@ const MainNavigator = createStackNavigator(
 );
 
 export default class App extends React.Component {
+  componentDidMount = () => {
+    clearLocalNotification().then(setLocalNotification);
+  };
+
   render() {
     return (
       <Provider store={store}>

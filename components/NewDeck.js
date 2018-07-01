@@ -38,6 +38,7 @@ class NewDeck extends Component {
           value={this.state.title}
           onChangeText={this.onChangeText}
           placeholder="What is the title of your new deck?"
+          underlineColorAndroid="transparent"
         />
         <Button onPress={this.submitDeck}>Create Deck</Button>
       </View>
