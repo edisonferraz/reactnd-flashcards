@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { View, StyleSheet, TextInput, Keyboard } from "react-native";
+import { View, Text, StyleSheet, TextInput, Keyboard } from "react-native";
 import * as colors from "../utils/colors";
 import Button from "./Button";
 import { createDeck } from "../actions";
 
 class NewDeck extends Component {
   state = {
-    title: ""
+    title: "",
+    titleRequired: false
   };
 
   onChangeText = text => {
@@ -19,6 +20,14 @@ class NewDeck extends Component {
 
   submitDeck = () => {
     const { title } = this.state;
+
+    if (!title.trim()) {
+      this.setState({
+        titleRequired: true
+      });
+      return;
+    }
+
     const newDeck = {
       [title]: { title, questions: [] }
     };
@@ -34,12 +43,18 @@ class NewDeck extends Component {
     return (
       <View style={styles.container}>
         <TextInput
-          style={styles.textInput}
+          style={[
+            styles.textInput,
+            this.state.titleRequired ? styles.inputRequired : {}
+          ]}
           value={this.state.title}
           onChangeText={this.onChangeText}
           placeholder="What is the title of your new deck?"
           underlineColorAndroid="transparent"
         />
+        {this.state.titleRequired && (
+          <Text style={styles.txtRequired}>Title is required</Text>
+        )}
         <Button onPress={this.submitDeck}>Create Deck</Button>
       </View>
     );
@@ -67,5 +82,14 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     padding: 10
+  },
+  inputRequired: {
+    borderColor: "red"
+  },
+  txtRequired: {
+    color: "red",
+    margin: 10,
+    marginTop: 5,
+    fontSize: 12
   }
 });

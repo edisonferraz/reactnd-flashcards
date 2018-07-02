@@ -11,7 +11,6 @@ import { FontAwesome } from "@expo/vector-icons";
 
 import { createStackNavigator } from "react-navigation";
 import { Constants } from "expo";
-import { clearLocalNotification, setLocalNotification } from "./utils/helpers";
 
 import DeckList from "./components/DeckList";
 import DeckDetail from "./components/DeckDetail";
@@ -85,10 +84,6 @@ const MainNavigator = createStackNavigator(
 );
 
 export default class App extends React.Component {
-  componentDidMount = () => {
-    clearLocalNotification().then(setLocalNotification);
-  };
-
   render() {
     return (
       <Provider store={store}>

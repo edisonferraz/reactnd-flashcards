@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Keyboard
-} from "react-native";
+import { Text, View, StyleSheet, TextInput, Keyboard } from "react-native";
 
 import { addCardToDeck } from "../actions";
 import * as colors from "../utils/colors";
@@ -16,7 +9,9 @@ import Button from "./Button";
 class NewCard extends Component {
   state = {
     question: "",
-    answer: ""
+    answer: "",
+    questionRequired: false,
+    answerRequired: false
   };
 
   onChangeText = (key, text) => {
@@ -25,9 +20,25 @@ class NewCard extends Component {
     });
   };
 
-  submitDeck = () => {
+  submitCard = () => {
     const title = this.props.navigation.state.params;
     const card = this.state;
+
+    if (!card.question.trim()) {
+      this.setState({
+        questionRequired: true
+      });
+    }
+
+    if (!card.answer.trim()) {
+      this.setState({
+        answerRequired: true
+      });
+    }
+
+    if (!card.question.trim() || !card.answer.trim()) {
+      return;
+    }
 
     this.props
       .addCardToDeck(title, card)
@@ -41,22 +52,35 @@ class NewCard extends Component {
       <View>
         <View>
           <TextInput
-            style={[styles.textInput, { marginTop: 50 }]}
+            style={[
+              styles.textInput,
+              { marginTop: 50 },
+              this.state.questionRequired ? styles.inputRequired : {}
+            ]}
             value={this.state.question}
             onChangeText={text => this.onChangeText("question", text)}
             placeholder="Question"
             underlineColorAndroid="transparent"
           />
+          {this.state.questionRequired && (
+            <Text style={styles.txtRequired}>Question is required</Text>
+          )}
 
           <TextInput
-            style={[styles.textInput, { marginBottom: 10 }]}
+            style={[
+              styles.textInput,
+              this.state.questionRequired ? styles.inputRequired : {}
+            ]}
             value={this.state.answer}
             onChangeText={text => this.onChangeText("answer", text)}
             placeholder="Answer"
             underlineColorAndroid="transparent"
           />
+          {this.state.answerRequired && (
+            <Text style={styles.txtRequired}>Answer is required</Text>
+          )}
         </View>
-        <Button onPress={this.submitDeck}>Add Card</Button>
+        <Button onPress={this.submitCard}>Add Card</Button>
       </View>
     );
   }
@@ -83,5 +107,14 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     padding: 10
+  },
+  inputRequired: {
+    borderColor: "red"
+  },
+  txtRequired: {
+    color: "red",
+    margin: 10,
+    marginTop: 5,
+    fontSize: 12
   }
 });

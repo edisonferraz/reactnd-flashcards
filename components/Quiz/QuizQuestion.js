@@ -1,22 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import * as colors from "../../utils/colors";
-import Button from "../Button";
 
-export default class QuizQuestion extends Component {
-  render() {
-    const { question, toggleView } = this.props;
+const QuizQuestion = ({ question, toggleView }) => (
+  <View>
+    <Text style={styles.question}>{question}</Text>
+    <TouchableOpacity onPress={toggleView}>
+      <Text style={styles.buttonText}>Answer</Text>
+    </TouchableOpacity>
+  </View>
+);
 
-    return (
-      <View>
-        <Text style={styles.question}>{question}</Text>
-        <TouchableOpacity onPress={toggleView}>
-          <Text style={styles.buttonText}>Answer</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-}
+export default QuizQuestion;
 
 const styles = StyleSheet.create({
   question: {

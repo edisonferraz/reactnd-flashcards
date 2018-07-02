@@ -1,13 +1,26 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-import { calculatePercentage } from "../../utils/helpers";
+import {
+  calculatePercentage,
+  clearLocalNotification,
+  setLocalNotification
+} from "../../utils/helpers";
 import * as colors from "../../utils/colors";
 import Button from "../Button";
 
 export default class QuizResult extends Component {
+  componentDidMount = () => {
+    clearLocalNotification().then(setLocalNotification);
+  };
+
   render() {
-    const { correctAnswers, numberOfQuestions, restartQuiz } = this.props;
+    const {
+      correctAnswers,
+      numberOfQuestions,
+      restartQuiz,
+      backToDeck
+    } = this.props;
 
     return (
       <View>
@@ -23,8 +36,10 @@ export default class QuizResult extends Component {
           {correctAnswers} of {numberOfQuestions}
         </Text>
 
-        <Button backgroundColor={colors.lightPurp} onPress={restartQuiz}>
-          Restart Quiz
+        <Button onPress={restartQuiz}>Restart Quiz</Button>
+
+        <Button backgroundColor={colors.lightPurp} onPress={backToDeck}>
+          Back to Deck
         </Button>
       </View>
     );

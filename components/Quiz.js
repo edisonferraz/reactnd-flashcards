@@ -40,8 +40,12 @@ export default class Quiz extends Component {
     });
   };
 
+  backToDeck = () => {
+    this.props.navigation.navigate("DeckDetail");
+  };
+
   render() {
-    const { title, questions } = this.props.navigation.state.params;
+    const { questions } = this.props.navigation.state.params;
     const numberOfQuestions = questions.length;
     const index = this.state.step < numberOfQuestions ? this.state.step : 0;
     const question = questions[index].question;
@@ -53,6 +57,7 @@ export default class Quiz extends Component {
           correctAnswers={this.state.correctAnswers}
           numberOfQuestions={numberOfQuestions}
           restartQuiz={this.restartQuiz}
+          backToDeck={this.backToDeck}
         />
       );
     }
